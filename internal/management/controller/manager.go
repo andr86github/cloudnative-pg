@@ -56,14 +56,16 @@ type InstanceReconciler struct {
 
 	certificateReconciler *instancecertificate.Reconciler
 	pluginRepository      repository.Interface
+	pluginSocketDir       string
 }
 
 // NewInstanceReconciler creates a new instance reconciler
-func NewInstanceReconciler(
+	func NewInstanceReconciler(
 	instance *postgres.Instance,
 	client ctrl.Client,
 	metricsExporter *metricserver.Exporter,
 	pluginRepository repository.Interface,
+	pluginSocketDir string,
 ) *InstanceReconciler {
 	return &InstanceReconciler{
 		instance:              instance,
@@ -74,6 +76,7 @@ func NewInstanceReconciler(
 		metricsServerExporter: metricsExporter,
 		certificateReconciler: instancecertificate.NewReconciler(client, instance),
 		pluginRepository:      pluginRepository,
+		pluginSocketDir:       pluginSocketDir,
 	}
 }
 

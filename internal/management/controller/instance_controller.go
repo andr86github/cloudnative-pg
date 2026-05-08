@@ -123,6 +123,10 @@ func (r *InstanceReconciler) Reconcile(
 	pluginLoadingContext, cancelPluginLoading := context.WithTimeout(ctx, 5*time.Second)
 	defer cancelPluginLoading()
 
+	// Try to register any new unix socket plugins that may have appeared
+	// since startup (handles race condition with sidecar containers)
+	_, _ = r.pluginRepository.RegisterUnixSocketPluginsInPath(r.pluginSocketDir)
+
 	pluginClient, err := cnpgiclient.WithPlugins(
 		pluginLoadingContext,
 		r.pluginRepository,

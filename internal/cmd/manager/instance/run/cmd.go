@@ -248,7 +248,7 @@ func runSubCommand( //nolint: gocyclo,gocognit
 	defer pluginRepository.Close()
 
 	metricsExporter := metricserver.NewExporter(instance, metrics.NewPluginCollector(pluginRepository))
-	reconciler := controller.NewInstanceReconciler(instance, mgr.GetClient(), metricsExporter, pluginRepository)
+			reconciler := controller.NewInstanceReconciler(instance, mgr.GetClient(), metricsExporter, pluginRepository,configuration.Current.PluginSocketDir)
 	err = ctrl.NewControllerManagedBy(mgr).
 		For(&apiv1.Cluster{}).
 		Named("instance-cluster").
