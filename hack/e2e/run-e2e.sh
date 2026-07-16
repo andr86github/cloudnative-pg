@@ -168,15 +168,21 @@ if [[ "${TEST_CLOUD_VENDOR}" != "ocp" ]]; then
 
   # Install plugin-barman-cloud for the plugin-based backup tests. Restricted to
   # local engines (kind/k3d) for now; cloud-vendor coverage will follow with the
-  # backup test ports.
-  case "${TEST_CLOUD_VENDOR:-}" in
-    kind | k3d)
-      install_barman_cloud_plugin
-      ;;
-    *)
-      echo "Skipping plugin-barman-cloud install on '${TEST_CLOUD_VENDOR:-}' (only kind/k3d for now)."
-      ;;
-  esac
+  # backup test ports. Skipped entirely when SKIP_BARMAN_PLUGIN=true (e.g. when
+  # testing against clusters still on in-tree Barman / k8s too old for the
+  # plugin's CRD CEL features).
+  if [[ "${SKIP_BARMAN_PLUGIN:-false}" == "true" ]]; then
+    echo "Skipping plugin-barman-cloud install (SKIP_BARMAN_PLUGIN=true)."
+  else
+    case "${TEST_CLOUD_VENDOR:-}" in
+      kind | k3d)
+        install_barman_cloud_plugin
+        ;;
+      *)
+        echo "Skipping plugin-barman-cloud install on '${TEST_CLOUD_VENDOR:-}' (only kind/k3d for now)."
+        ;;
+    esac
+  fi
 fi
 
 # Run the main (non-upgrade) test suite via run-e2e-suite.sh,
