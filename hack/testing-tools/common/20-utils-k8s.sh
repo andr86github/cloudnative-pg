@@ -485,7 +485,7 @@ function ensure_cert_manager() {
                 "${bright}" "${cert_manager_version}" "${reset}" >&2
             return 1
         fi
-        retry 5 "${K8S_CLI}" apply --server-side --force-conflicts -f "${manifest_file}"
+        retry 5 "${K8S_CLI}" apply --server-side --force-conflicts --validate=false -f "${manifest_file}"
     fi
     ${K8S_CLI} wait --for=condition=Available --timeout=300s -n cert-manager \
         deployment/cert-manager deployment/cert-manager-webhook deployment/cert-manager-cainjector
@@ -627,7 +627,7 @@ EOF
         return 1
     fi
 
-    retry 5 "${K8S_CLI}" apply --server-side --force-conflicts -f "${manifest_file}"
+    retry 5 "${K8S_CLI}" apply --server-side --force-conflicts --validate=false -f "${manifest_file}"
 
     ${K8S_CLI} -n "${operator_namespace}" rollout status deploy/barman-cloud --timeout=5m
 
