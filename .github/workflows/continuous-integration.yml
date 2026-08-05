@@ -34,6 +34,8 @@ env:
   KUBEBUILDER_VERSION: "2.3.1"
   # renovate: datasource=github-tags depName=kubernetes-sigs/kind versioning=semver
   KIND_VERSION: "v0.32.0"
+  CERT_MANAGER_VERSION: "v1.14.5"
+  SKIP_BARMAN_PLUGIN: "true"
   OPERATOR_IMAGE_NAME: "ghcr.io/${{ github.repository }}-testing"
   API_DOC_NAME: "cloudnative-pg.v1.md"
   SLACK_USERNAME: "cnpg-bot"

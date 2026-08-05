@@ -57,7 +57,11 @@ go install github.com/onsi/ginkgo/v2/ginkgo@v2.32.0
 # Unset DEBUG to prevent k8s from spamming messages
 unset DEBUG
 
-LABEL_FILTERS="${FEATURE_TYPE//,/ || }"
+if [ "${FEATURE_TYPE-}" ]; then
+  LABEL_FILTERS="(${FEATURE_TYPE//,/ || }) && !plugin-barman-cloud"
+else
+  LABEL_FILTERS="!plugin-barman-cloud"
+fi
 readonly LABEL_FILTERS
 
 echo "E2E tests are running with the following filters: ${LABEL_FILTERS}"
