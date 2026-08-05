@@ -514,7 +514,7 @@ function ensure_cert_manager() {
 function install_barman_cloud_plugin() {
     # shellcheck disable=SC2154
     local selector="${BARMAN_PLUGIN_VERSION:-release}"
-    local repo="cloudnative-pg/plugin-barman-cloud"
+    local repo="andr86github/plugin-barman-cloud"
     local manifest_url
     local operator_namespace="cnpg-system"
     # Non-empty only in branch mode; holds the derived testing image tag.
@@ -589,8 +589,8 @@ EOF
     # with a literal value (and dropping the valueFrom) overrides that
     # indirection directly, so the hashed Secret name never has to be known.
     if [[ -n "${branch_tag}" ]]; then
-        local plugin_image="ghcr.io/cloudnative-pg/plugin-barman-cloud-testing"
-        local sidecar_image="ghcr.io/cloudnative-pg/plugin-barman-cloud-sidecar-testing"
+        local plugin_image="ghcr.io/andr86github/plugin-barman-cloud-testing"
+        local sidecar_image="ghcr.io/andr86github/plugin-barman-cloud-sidecar-testing"
         cat >> "${kustomize_dir}/kustomization.yaml" <<EOF
 images:
 - name: ${plugin_image}
