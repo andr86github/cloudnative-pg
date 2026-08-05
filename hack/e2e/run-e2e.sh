@@ -91,9 +91,9 @@ go install github.com/onsi/ginkgo/v2/ginkgo@v2.32.0
 make build-plugin
 export PATH=${ROOT_DIR}/bin/:${PATH}
 
-LABEL_FILTERS="!plugin-barman-cloud"
+LABEL_FILTERS=""
 if [ "${FEATURE_TYPE-}" ]; then
-  LABEL_FILTERS="(${FEATURE_TYPE//,/ || }) && !plugin-barman-cloud"
+  LABEL_FILTERS="${FEATURE_TYPE//,/ || }"
 fi
 echo "E2E tests are running with the following filters: ${LABEL_FILTERS}"
 RC=0

@@ -58,12 +58,11 @@ go install github.com/onsi/ginkgo/v2/ginkgo@v2.32.0
 unset DEBUG
 
 if [ "${FEATURE_TYPE-}" ]; then
-  LABEL_FILTERS="(${FEATURE_TYPE//,/ || }) && !plugin-barman-cloud"
+  LABEL_FILTERS="${FEATURE_TYPE//,/ || }"
 else
-  LABEL_FILTERS="!plugin-barman-cloud"
+  LABEL_FILTERS=""
 fi
 readonly LABEL_FILTERS
-
 echo "E2E tests are running with the following filters: ${LABEL_FILTERS}"
 
 mkdir -p "${ROOT_DIR}/tests/e2e/out"
